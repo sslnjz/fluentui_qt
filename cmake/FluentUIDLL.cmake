@@ -1,0 +1,25 @@
+set(BUILD_SHARED_LIBS ON CACHE BOOL "Build shared libraries")
+
+# Add a d postfix to Debug libraries on Windows
+if(MSVC)
+  set(CMAKE_DEBUG_POSTFIX "d")
+endif()
+
+# DLL export and import macros
+set(FLUENTUI_PLATFORM_EXPORT)
+set(FLUENTUI_PLATFORM_IMPORT)
+set(FLUENTUI_TEMPLATE_EXTERN extern)
+set(FLUENTUI_DLL_EXPORT)
+set(FLUENTUI_STATIC_LIBRARY)
+if(NOT BUILD_SHARED_LIBS)
+  set(FLUENTUI_STATIC_LIBRARY 1)
+else()
+  if(WIN32)
+    set(FLUENTUI_PLATFORM_EXPORT "__declspec(dllexport)")
+    set(FLUENTUI_PLATFORM_IMPORT "__declspec(dllimport)")
+    if (MSVC)
+      set(FLUENTUI_TEMPLATE_EXTERN)
+    endif()
+    set(FLUENTUI_DLL_EXPORT 1)
+  endif()
+endif()
