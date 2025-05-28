@@ -4,7 +4,8 @@
 
 #include <QPaintEvent>
 #include <QPainter>
-
+#include <QAbstractAnimation>
+#include <QApplication>
 
 using Badge = fluent::Badge;
 using Appearances = Badge::Appearances;
@@ -14,7 +15,8 @@ Badge::Badge(QWidget *parent)
 {
 }
 
-Badge::~Badge() {
+Badge::~Badge()
+{
 }
 
 QIcon Badge::icon() const
@@ -43,11 +45,13 @@ void Badge::paintEvent(QPaintEvent *event)
 
     QPainter p(this);
 
+    p.drawRect(0, 0, 20, 20);
+
     p.save();
     p.setRenderHint(QPainter::Antialiasing);
     p.setPen(QPen(Qt::NoPen));
     p.setBrush(colors::Light::colorBrandBackground);
-    p.drawEllipse(1,1,20,20);
+    p.drawEllipse(0, 0, 20, 20);
     p.restore();
 
     QWidget::paintEvent(event);
@@ -55,5 +59,5 @@ void Badge::paintEvent(QPaintEvent *event)
 
 QSize Badge::sizeHint() const
 {
-    return QSize(22,22);
+    return QSize(20, 20);
 }

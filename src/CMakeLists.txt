@@ -26,16 +26,17 @@ set(fluentui_qt_SOURCES
 if(NOT DEFINED Qt6_DIR)
     message(STATUS "Qt6_DIR not defined. Attempting auto-discovery...")
 
-    # Windows 示例路径（MSVC）
-    list(APPEND CMAKE_PREFIX_PATH "D:\\tools\\Qt\\Qt6.9.0\\6.9.0\\msvc2022_64")
-
-    # # Linux 示例路径
-    # list(APPEND CMAKE_PREFIX_PATH "$ENV{HOME}/Qt/6.9.0/gcc_64")
-    # list(APPEND CMAKE_PREFIX_PATH "/opt/Qt/6.9.0/gcc_64")
-
-    # # macOS 示例路径
-    # list(APPEND CMAKE_PREFIX_PATH "$ENV{HOME}/Qt/6.9.0/clang_64")
-    # list(APPEND CMAKE_PREFIX_PATH "/Applications/Qt/6.9.0/clang_64")
+        if(MSVC)
+                # Windows 示例路径（MSVC）
+                list(APPEND CMAKE_PREFIX_PATH "D:\\tools\\Qt\\Qt6.9.0\\6.9.0\\msvc2022_64")
+        elseif(UNIX)
+                # # Linux 示例路径
+                # list(APPEND CMAKE_PREFIX_PATH "$ENV{HOME}/Qt/6.9.0/gcc_64")
+                # list(APPEND CMAKE_PREFIX_PATH "/opt/Qt/6.9.0/gcc_64")
+        elseif(APPLE)
+                # # macOS 示例路径
+                list(APPEND CMAKE_PREFIX_PATH "/Users/bin/Applications/Qt/6.9.0/macos/lib/cmake")
+        endif()
 endif()
 
 find_package(QT NAMES Qt6 REQUIRED COMPONENTS Core)
@@ -44,7 +45,6 @@ find_package(Qt${QT_VERSION_MAJOR}
         Core
         Gui
         Widgets
-        Network
 )
 qt_standard_project_setup()
 
@@ -53,7 +53,6 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
 
 set(Qt_VERSION ${Qt6_VERSION} CACHE STRING "Qt6 version" FORCE)
-
 
 # Windows resource.  With some additional work to clean it up, it
 # might be possible to use with Cygwin and MinGW.
@@ -109,4 +108,23 @@ if(MSVC)
     target_compile_definitions(Qt6Fluent PRIVATE
             "FLUENTUI_DLL_NAME=\"$<TARGET_FILE_NAME:Qt6Fluent>\\0\"")
     set_target_properties(Qt6Fluent PROPERTIES DEBUG_POSTFIX "D")
+elseif(UNIX)
+    # For strict libtool compatibility on Unix.  It's a horrible hack to
+    # set the version in the filename, and create the symlink at install
+    # time.  Note: could be dropped when the SONAME is updated and
+    # libtool compatibility is no longer required.
+    if(BUILD_SHARED_LIBS)
+        set_target_properties(Qt6Fluent PROPERTIES 
+            VERSION "${INTERFACE_VERSION_D}"   
+        )
+        install(TARGETS Qt6Fluent LIBRARY DESTINATION lib)
+    endif()
+else()
+    # Not used for the common cases, though this would be the default if
+    # not for libtool compatibility.
+    set_target_properties(Qt6Fluent PROPERTIES VERSION ${INTERFACE_VERSION_D})
+    if(NOT CYGWIN)
+            set_target_properties(Qt6Fluent PROPERTIES VERSION
+                    ${INTERFACE_VERSION_D})
+    endif()
 endif()
