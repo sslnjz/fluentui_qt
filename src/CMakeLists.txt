@@ -1,23 +1,33 @@
 set(core_headers
-    fluentui/core/colors.h
+        fluentui/core/colors.h
 )
 
 set(core_sources
 )
 
+set(components_headers
+        fluentui/components/Badge.h
+)
+
+set(components_sources
+        fluentui/components/Badge.cpp
+)
+
 set(fluentui_qt_HEADERS
-    ${core_headers}
+        ${core_headers}
+        ${components_headers}
 )
 
 set(fluentui_qt_SOURCES
-    ${core_sources}
+        ${core_sources}
+        ${components_sources}
 )
 
-if(NOT DEFINED Qt5_DIR)
-    message(STATUS "Qt5_DIR not defined. Attempting auto-discovery...")
+if(NOT DEFINED Qt6_DIR)
+    message(STATUS "Qt6_DIR not defined. Attempting auto-discovery...")
 
     # Windows 示例路径（MSVC）
-    list(APPEND CMAKE_PREFIX_PATH "D:/tools/Qt/Qt5.15.16/msvc2022_64/")
+    list(APPEND CMAKE_PREFIX_PATH "D:\\tools\\Qt\\Qt6.9.0\\6.9.0\\msvc2022_64")
 
     # # Linux 示例路径
     # list(APPEND CMAKE_PREFIX_PATH "$ENV{HOME}/Qt/6.9.0/gcc_64")
@@ -28,17 +38,21 @@ if(NOT DEFINED Qt5_DIR)
     # list(APPEND CMAKE_PREFIX_PATH "/Applications/Qt/6.9.0/clang_64")
 endif()
 
-find_package(Qt5 REQUIRED COMPONENTS
-    Core
-    Gui
-    Widgets
+find_package(QT NAMES Qt6 REQUIRED COMPONENTS Core)
+find_package(Qt${QT_VERSION_MAJOR}
+    COMPONENTS
+        Core
+        Gui
+        Widgets
+        Network
 )
+qt_standard_project_setup()
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
 
-set(Qt_VERSION ${Qt5_VERSION} CACHE STRING "Qt5 version" FORCE)
+set(Qt_VERSION ${Qt6_VERSION} CACHE STRING "Qt6 version" FORCE)
 
 
 # Windows resource.  With some additional work to clean it up, it
@@ -51,6 +65,16 @@ if(MSVC)
         list(APPEND fluentui_qt_RESOURCES
                 "${CMAKE_CURRENT_BINARY_DIR}/fluentui/resources/version.rc")
 endif()
+
+configure_file(
+        ${CMAKE_CURRENT_SOURCE_DIR}/fluentui/fluentui_autoconf_config.h.cmake.in
+        ${CMAKE_CURRENT_BINARY_DIR}/fluentui/fluentui_autoconf_config.h
+        @ONLY)
+
+configure_file(
+        ${CMAKE_CURRENT_LIST_DIR}/fluentui/fluentui_version.h.cmake.in
+        ${CMAKE_CURRENT_BINARY_DIR}/fluentui/fluentui_version.h
+        @ONLY)
 
 # Definitions required for building
 add_definitions(
@@ -71,9 +95,9 @@ add_library(Qt6Fluent
     ${fluentui_qt_RESOURCES})
 
 target_link_libraries(Qt6Fluent PRIVATE
-    Qt5::Core
-    Qt5::Gui
-    Qt5::Widgets
+    Qt6::Core
+    Qt6::Gui
+    Qt6::Widgets
 )
 
 set_target_properties(${TARGET_NAME} PROPERTIES

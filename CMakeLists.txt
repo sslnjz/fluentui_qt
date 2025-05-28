@@ -39,7 +39,7 @@ include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
 include(FluentUIDLL)
 
-option(BUILD_EXAMPLES "Build example applications" OFF)
+option(BUILD_EXAMPLES "Build example applications" ON)
 option(BUILD_TESTS "Build tests" ON)
 option(BUILD_DOCS "Build documentation" OFF)
 option(BUILD_DESIGNER_PLUGIN "Build Qt Designer plugin" OFF)
