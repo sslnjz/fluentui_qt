@@ -14,6 +14,10 @@ public:
     explicit Gallery(QWidget *parent = nullptr);
     ~Gallery() override;
 
+    QSize sizeHint() const override {
+        return QSize(800, 600); // Default size for the gallery
+    }
+
 };
 
 

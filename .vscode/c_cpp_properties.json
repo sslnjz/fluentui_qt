@@ -14,6 +14,23 @@
       "cppStandard": "c++17",
       "intelliSenseMode": "macos-clang-x64",
       "configurationProvider": "ms-vscode.cmake-tools"
+    },
+    {
+        "name": "Win32",
+        "includePath": [
+            "${workspaceFolder}/**",
+            "D:/tools/Qt/Qt6.9.0/6.9.0/msvc2022_64/include/**"
+        ],
+        "defines": [
+            "_DEBUG",
+            "UNICODE",
+            "_UNICODE"
+        ],
+        "windowsSdkVersion": "10.0.22621.0",
+        "compilerPath": "cl.exe",
+        "cStandard": "c17",
+
+        "cppStandard": "c++17"
     }
   ],
   "version": 4

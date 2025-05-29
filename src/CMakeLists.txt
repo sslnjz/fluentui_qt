@@ -1,5 +1,4 @@
 set(core_headers
-        fluentui/core/colors.h
 )
 
 set(core_sources
@@ -13,13 +12,22 @@ set(components_sources
         fluentui/components/Badge.cpp
 )
 
+set(styles_headers
+        fluentui/styles/Light.h
+)
+
+set(styles_sources
+)
+
 set(fluentui_qt_HEADERS
         ${core_headers}
+        ${styles_headers}
         ${components_headers}
 )
 
 set(fluentui_qt_SOURCES
         ${core_sources}
+        ${styles_sources}
         ${components_sources}
 )
 
@@ -114,8 +122,8 @@ elseif(UNIX)
     # time.  Note: could be dropped when the SONAME is updated and
     # libtool compatibility is no longer required.
     if(BUILD_SHARED_LIBS)
-        set_target_properties(Qt6Fluent PROPERTIES 
-            VERSION "${INTERFACE_VERSION_D}"   
+        set_target_properties(Qt6Fluent PROPERTIES
+            VERSION "${INTERFACE_VERSION_D}"
         )
         install(TARGETS Qt6Fluent LIBRARY DESTINATION lib)
     endif()
