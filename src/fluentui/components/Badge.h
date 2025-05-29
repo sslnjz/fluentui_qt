@@ -16,11 +16,12 @@ class FLUENTUI_EXPORT Badge : public QWidget
 
 public:
     Q_PROPERTY(QIcon icon READ icon WRITE setIcon)
-    Q_PROPERTY(Colors color READ color WRITE setColor)
-    Q_PROPERTY(PresetSizes presetSize READ presetSize WRITE setPresetSize)
-    Q_PROPERTY(Appearances appearance READ appearance WRITE setAppearance)
+    Q_PROPERTY(QString text READ text WRITE setText)
+    Q_PROPERTY(Color color READ color WRITE setColor)
+    Q_PROPERTY(PresetSize presetSize READ presetSize WRITE setPresetSize)
+    Q_PROPERTY(Appearance appearance READ appearance WRITE setAppearance)
 
-    enum Color{
+    enum class Color{
         brand,
         danger,
         important,
@@ -30,17 +31,15 @@ public:
         success,
         warning
     };
-    Q_DECLARE_FLAGS(Colors, Color)
 
-    enum Appearance {
+    enum class Appearance {
         filled,
         ghost,
         outline,
         tint
     };
-    Q_DECLARE_FLAGS(Appearances, Appearance)
 
-    enum PresetSize {
+    enum class PresetSize {
         tiny,
         extrasmall,
         small,
@@ -48,8 +47,6 @@ public:
         large,
         extralarge
     };
-    Q_DECLARE_FLAGS(PresetSizes, PresetSize)
-
 
     explicit Badge(QWidget* parent = nullptr);
     ~Badge() override;
@@ -57,17 +54,21 @@ public:
     QIcon icon() const;
     void setIcon(const QIcon& icon);
 
-    Colors color() const;
-    void setColor(Colors color);
+    QString text() const;
+    void setText(const QString& text);
 
-    PresetSizes presetSize() const;
-    void setPresetSize(PresetSizes size);
+    Color color() const;
+    void setColor(Color color);
 
-    Appearances appearance() const;
-    void setAppearance(Appearances appearance);
+    PresetSize presetSize() const;
+    void setPresetSize(PresetSize size);
+
+    Appearance appearance() const;
+    void setAppearance(Appearance appearance);
 
 protected:
     void paintEvent(QPaintEvent *event) override;
+    
 
 public:
     QSize sizeHint() const override;

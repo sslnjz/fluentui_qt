@@ -1,5 +1,10 @@
 
 #include "Badge.h"
+#include <QtCore/qlogging.h>
+#include <QtCore/qnamespace.h>
+#include <QtGui/qfontmetrics.h>
+#include <QtGui/qpainter.h>
+#include <QtGui/qpen.h>
 #include <fluentui/styles/Light.h>
 
 #include <QPaintEvent>
@@ -9,9 +14,9 @@
 #include <qsizepolicy.h>
 
 
-using Colors = Badge::Colors;
-using Appearances = Badge::Appearances;
-using PresetSizes = Badge::PresetSizes;
+using Color = Badge::Color;
+using Appearance = Badge::Appearance;
+using PresetSize = Badge::PresetSize;
 
 class BadgePrivate
 {
@@ -19,29 +24,95 @@ class BadgePrivate
 public:
     BadgePrivate(Badge *q)
         : q_ptr(q)
-        , _color(Badge::brand)
-        , _size(Badge::medium)
-        , _appearance(Badge::filled)
+        , color(Badge::Color::brand)
+        , presetSize(Badge::PresetSize::medium)
+        , appearance(Badge::Appearance::filled)
+        , backgroundColor(fluentui::Light::colorBrandBackground)
+        , foregroundColor(fluentui::Light::colorNeutralForegroundOnBrand)
         {
         }
 
     ~BadgePrivate() = default;
 
-    QIcon _icon;
-    Colors _color;
-    PresetSizes _size;
-    Appearances _appearance;
+    void filled(QPainter& painter)
+    {
+
+        qDebug() << "contentsRect: " << q_ptr->contentsRect();
+        qDebug() << "rect: " << q_ptr->rect();
+        qDebug() << "sizeHint: " << q_ptr->sizeHint();
+
+        painter.save();
+        painter.setPen(Qt::NoPen);
+        painter.setRenderHint(QPainter::Antialiasing);
+        painter.setBrush(backgroundColor);
+        painter.drawRoundedRect(q_ptr->rect().adjusted(1, 1, -1, -1), radius(), radius());
+
+        if(!text.isEmpty())
+        {
+            painter.setPen(QPen(foregroundColor));
+            painter.drawText(q_ptr->rect(), Qt::AlignCenter, text);
+        }
+
+        painter.restore();
+    }
+    
+    void ghost(QPainter& painter)
+    {
+
+    }
+
+    void outline(QPainter& painter);
+    void tint(QPainter& painter);
+
+    int fontMetrics() const
+    {
+        if(text.isEmpty()) return 0;
+        QFontMetricsF metric(q_ptr->font());
+        return metric.horizontalAdvance(text) + 12;
+    }
+
+    int radius()
+    {
+        switch (presetSize) {
+        case Badge::PresetSize::tiny:
+            return 4;
+        case Badge::PresetSize::extrasmall:
+            return 6;
+        case Badge::PresetSize::small:
+            return 9;
+        case Badge::PresetSize::medium:
+            return 11;
+        case Badge::PresetSize::large:
+            return 13;
+        case Badge::PresetSize::extralarge:
+            return 17;
+        }
+    }
+
+public:
+    QIcon icon;
+    QString text;
+    Color color;
+    PresetSize presetSize;
+    Appearance appearance;
 
 private:
     Badge *q_ptr;
+
+    QColor backgroundColor;
+    QColor foregroundColor;
 };
 
 Badge::Badge(QWidget *parent)
     : QWidget(parent)
     , d_ptr(new BadgePrivate(this))
 {
-    setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
     setAttribute(Qt::WA_StyledBackground, true);
+
+    auto f = font();
+    f.setPixelSize(12);
+    setFont(f);
 }
 
 Badge::~Badge() {
@@ -50,67 +121,84 @@ Badge::~Badge() {
 QIcon Badge::icon() const
 {
     Q_D(const Badge);
-    return d->_icon;
+    return d->icon;
 }
 
 void Badge::setIcon(const QIcon &icon)
 {
     Q_D(Badge);
-    d->_icon = icon;
+    d->icon = icon;
 }
 
-Colors Badge::color() const
+QString Badge::text() const
 {
     Q_D(const Badge);
-    return d->_color;
+    return d->text;
 }
 
-void Badge::setColor(Colors color)
+void Badge::setText(const QString &text)
 {
     Q_D(Badge);
-    d->_color = color;
+    d->text = text;
+    setFixedSize(sizeHint()); // Update the fixed size based on the preset size
 }
 
-Appearances Badge::appearance() const
+Color Badge::color() const
 {
     Q_D(const Badge);
-    return d->_appearance;
+    return d->color;
 }
 
-void Badge::setAppearance(Appearances appearance)
+void Badge::setColor(Color color)
 {
     Q_D(Badge);
-    d->_appearance = appearance;
+    d->color = color;
+}
+
+Appearance Badge::appearance() const
+{
+    Q_D(const Badge);
+    return d->appearance;
+}
+
+void Badge::setAppearance(Appearance appearance)
+{
+    Q_D(Badge);
+    d->appearance = appearance;
     update(); // Trigger a repaint when the appearance changes
 }
 
-PresetSizes Badge::presetSize() const
+PresetSize Badge::presetSize() const
 {
     Q_D(const Badge);
-    return d->_size;
+    return d->presetSize;
 }
 
-void Badge::setPresetSize(PresetSizes size)
+void Badge::setPresetSize(PresetSize s)
 {
     Q_D(Badge);
-    d->_size = size;
+    d->presetSize = s;
     setFixedSize(sizeHint()); // Update the fixed size based on the preset size
     update(); // Trigger a repaint when the size changes
 }
 
 void Badge::paintEvent(QPaintEvent *event)
 {
+    Q_D(Badge);
     QPainter painter(this);
 
-    painter.save();
-    painter.setRenderHint(QPainter::Antialiasing);
-    painter.setPen(QPen(Qt::NoPen));
-    painter.setBrush(fluentui::Light::colorBrandBackground);
-    painter.drawEllipse(rect().adjusted(1, 1, -1, -1));
-
-    qDebug() << "rect:" << rect().adjusted(1, 1, -1, -1) << "sizeHint:" << sizeHint();
-
-    painter.restore();
+    switch (d->appearance) 
+    {
+    case Appearance::filled:
+        d->filled(painter);
+        break;
+    case Appearance::ghost:
+        break;
+    case Appearance::outline:
+        break;
+    case Appearance::tint:
+        break;
+    }
 
     QWidget::paintEvent(event);
 }
@@ -119,21 +207,21 @@ void Badge::paintEvent(QPaintEvent *event)
 QSize Badge::sizeHint() const
 {
     Q_D(const Badge);
-    switch (d->_size) {
-        case Badge::tiny:
-            return QSize(8, 8);
-        case Badge::extrasmall:
-            return QSize(12, 12);
-        case Badge::small:
-            return QSize(18, 18);
-        case Badge::medium:
-            return QSize(22, 22);
-        case Badge::large:
-            return QSize(26, 26);
-        case Badge::extralarge:
-            return QSize(34, 34);
+    switch (d->presetSize) {
+        case PresetSize::tiny:
+            return QSize(qMax(8, d->fontMetrics()), 8);
+        case PresetSize::extrasmall:
+            return QSize(qMax(12, d->fontMetrics()), 12);
+        case PresetSize::small:
+            return QSize(qMax(18, d->fontMetrics()), 18);
+        case PresetSize::medium:
+            return QSize(qMax(22, d->fontMetrics()), 22);
+        case PresetSize::large:
+            return QSize(qMax(26, d->fontMetrics()), 26);
+        case PresetSize::extralarge:
+            return QSize(qMax(34, d->fontMetrics()), 34);
         default:
-            return QSize(22, 22); // Default size if no preset matches
+            return QSize(qMax(22, d->fontMetrics()), 22); // Default size if no preset matches
     }
 }
 

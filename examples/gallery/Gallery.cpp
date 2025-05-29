@@ -7,6 +7,7 @@
 #include "fluentui/components/Badge.h"
 
 #include <QHBoxLayout>
+#include <QtGui/qpalette.h>
 #include <qboxlayout.h>
 #include <QFrame>
 
@@ -24,6 +25,7 @@ Gallery::Gallery(QWidget *parent) {
 
     auto* badge4 = new Badge(this);
     badge4->setPresetSize(Badge::PresetSize::medium);
+    // badge4->setText("999+");
 
     auto* badge5 = new Badge(this);
     badge5->setPresetSize(Badge::PresetSize::large);
@@ -39,12 +41,11 @@ Gallery::Gallery(QWidget *parent) {
     layout2->addWidget(badge4);
     layout2->addWidget(badge5);
     layout2->addWidget(badge6);
-    layout2->setSpacing(0);
-
-
+    layout2->setSpacing(8);
 
     QFrame *frame = new QFrame(this);
     frame->setLayout(layout2);
+    frame->setStyleSheet("QFrame{background: lightgray;}");
 
 
     QHBoxLayout* layout = new QHBoxLayout(this);
