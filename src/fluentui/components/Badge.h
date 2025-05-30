@@ -68,7 +68,7 @@ public:
 
 protected:
     void paintEvent(QPaintEvent *event) override;
-    
+    void resizeEvent(QResizeEvent *event) override;
 
 public:
     QSize sizeHint() const override;

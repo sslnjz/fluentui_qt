@@ -10,6 +10,7 @@
 #include <QtGui/qpalette.h>
 #include <qboxlayout.h>
 #include <QFrame>
+#include <qnamespace.h>
 
 Gallery::Gallery(QWidget *parent) {
 
@@ -25,7 +26,7 @@ Gallery::Gallery(QWidget *parent) {
 
     auto* badge4 = new Badge(this);
     badge4->setPresetSize(Badge::PresetSize::medium);
-    // badge4->setText("999+");
+    badge4->setText("999+");
 
     auto* badge5 = new Badge(this);
     badge5->setPresetSize(Badge::PresetSize::large);
@@ -34,7 +35,6 @@ Gallery::Gallery(QWidget *parent) {
     badge6->setPresetSize(Badge::PresetSize::extralarge);
 
     QHBoxLayout *layout2 = new QHBoxLayout;
-    layout2->setContentsMargins(0, 0, 0, 0);
     layout2->addWidget(badge);
     layout2->addWidget(badge2);
     layout2->addWidget(badge3);
@@ -49,9 +49,10 @@ Gallery::Gallery(QWidget *parent) {
 
 
     QHBoxLayout* layout = new QHBoxLayout(this);
-    layout->setContentsMargins(0, 0, 0, 0);
+    layout->setContentsMargins(0, 10, 0, 10);
     layout->addWidget(frame);
     layout->setAlignment(frame, Qt::AlignCenter);
+    this->setLayout(layout);
 }
 
 Gallery::~Gallery() = default;
