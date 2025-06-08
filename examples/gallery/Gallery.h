@@ -15,7 +15,7 @@ public:
     ~Gallery() override;
 
     QSize sizeHint() const override {
-        return QSize(800, 600); // Default size for the gallery
+        return QSize(800, 800); // Default size for the gallery
     }
 
 };

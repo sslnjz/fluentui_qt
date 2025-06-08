@@ -5,19 +5,22 @@ set(gallery_sources
         gallery/Gallery.h
 )
 
+list(APPEND CMAKE_PREFIX_PATH "/Applications/Qt/6.9.1/macos")
+
 if(NOT DEFINED Qt6_DIR)
     message(STATUS "Qt6_DIR not defined. Attempting auto-discovery...")
 
-    # Windows 示例路径（MSVC）
-    list(APPEND CMAKE_PREFIX_PATH "D:\\tools\\Qt\\Qt6.9.0\\6.9.0\\msvc2022_64")
-
+    # Windows
+    if(MSVC)
+        list(APPEND CMAKE_PREFIX_PATH "D:\\tools\\Qt\\Qt6.9.0\\6.9.0\\msvc2022_64")
+    elseif(LINUX)
     # # Linux 示例路径
     # list(APPEND CMAKE_PREFIX_PATH "$ENV{HOME}/Qt/6.9.0/gcc_64")
     # list(APPEND CMAKE_PREFIX_PATH "/opt/Qt/6.9.0/gcc_64")
-
+    elseif(APPLE)
     # # macOS 示例路径
-    # list(APPEND CMAKE_PREFIX_PATH "$ENV{HOME}/Qt/6.9.0/clang_64")
-    # list(APPEND CMAKE_PREFIX_PATH "/Applications/Qt/6.9.0/clang_64")
+        list(APPEND CMAKE_PREFIX_PATH "/Applications/Qt/6.9.1/macos")
+    endif()
 endif()
 
 find_package(QT NAMES Qt6 REQUIRED COMPONENTS Core)

@@ -32,3 +32,4 @@
 *.app
 build/
 .cache/
+builds/Qt-6.9.1-macos/Debug

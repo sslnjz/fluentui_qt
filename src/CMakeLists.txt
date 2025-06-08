@@ -5,54 +5,57 @@ set(core_sources
 )
 
 set(components_headers
-        fluentui/components/Badge.h
+    fluentui/components/Badge.h
 )
 
 set(components_sources
-        fluentui/components/Badge.cpp
+    fluentui/components/Badge.cpp
 )
 
 set(styles_headers
-        fluentui/styles/Light.h
+    fluentui/styles/Style.h
+    # fluentui/styles/ThemeManager.h
 )
 
 set(styles_sources
+    # fluentui/styles/Style.cpp
+    # fluentui/styles/ThemeManager.cpp
 )
 
 set(fluentui_qt_HEADERS
-        ${core_headers}
-        ${styles_headers}
-        ${components_headers}
+    ${core_headers}
+    ${styles_headers}
+    ${components_headers}
 )
 
 set(fluentui_qt_SOURCES
-        ${core_sources}
-        ${styles_sources}
-        ${components_sources}
+    ${core_sources}
+    ${styles_sources}
+    ${components_sources}
 )
 
-if(NOT DEFINED Qt6_DIR)
-    message(STATUS "Qt6_DIR not defined. Attempting auto-discovery...")
+# if(NOT DEFINED Qt6_DIR)
+#     message(STATUS "Qt6_DIR not defined. Attempting auto-discovery...")
 
-        if(MSVC)
-                # Windows 示例路径（MSVC）
-                list(APPEND CMAKE_PREFIX_PATH "D:\\tools\\Qt\\Qt6.9.0\\6.9.0\\msvc2022_64")
-        elseif(UNIX)
-                # # Linux 示例路径
-                # list(APPEND CMAKE_PREFIX_PATH "$ENV{HOME}/Qt/6.9.0/gcc_64")
-                # list(APPEND CMAKE_PREFIX_PATH "/opt/Qt/6.9.0/gcc_64")
-        elseif(APPLE)
-                # # macOS 示例路径
-                list(APPEND CMAKE_PREFIX_PATH "/Users/bin/Applications/Qt/6.9.0/macos/lib/cmake")
-        endif()
-endif()
+#         if(MSVC)
+#                 # Windows 示例路径（MSVC）
+#                 list(APPEND CMAKE_PREFIX_PATH "D:\\tools\\Qt\\Qt6.9.0\\6.9.0\\msvc2022_64")
+#         elseif(UNIX)
+#                 # # Linux 示例路径
+#                 # list(APPEND CMAKE_PREFIX_PATH "$ENV{HOME}/Qt/6.9.0/gcc_64")
+#                 # list(APPEND CMAKE_PREFIX_PATH "/opt/Qt/6.9.0/gcc_64")
+#         elseif(APPLE)
+#                 # # macOS 示例路径
+#                 list(APPEND CMAKE_PREFIX_PATH "/Users/bin/Applications/Qt/6.9.0/macos/lib/cmake")
+#         endif()
+# endif()
 
 find_package(QT NAMES Qt6 REQUIRED COMPONENTS Core)
 find_package(Qt${QT_VERSION_MAJOR}
     COMPONENTS
-        Core
-        Gui
-        Widgets
+    Core
+    Gui
+    Widgets
 )
 qt_standard_project_setup()
 
@@ -65,27 +68,27 @@ set(Qt_VERSION ${Qt6_VERSION} CACHE STRING "Qt6 version" FORCE)
 # Windows resource.  With some additional work to clean it up, it
 # might be possible to use with Cygwin and MinGW.
 if(MSVC)
-        configure_file(
-                "${CMAKE_CURRENT_SOURCE_DIR}/fluentui/resources/version.rc.cmake.in"
-                "${CMAKE_CURRENT_BINARY_DIR}/fluentui/resources/version.rc"
-                @ONLY)
-        list(APPEND fluentui_qt_RESOURCES
-                "${CMAKE_CURRENT_BINARY_DIR}/fluentui/resources/version.rc")
+    configure_file(
+        "${CMAKE_CURRENT_SOURCE_DIR}/fluentui/resources/version.rc.cmake.in"
+        "${CMAKE_CURRENT_BINARY_DIR}/fluentui/resources/version.rc"
+        @ONLY)
+    list(APPEND fluentui_qt_RESOURCES
+        "${CMAKE_CURRENT_BINARY_DIR}/fluentui/resources/version.rc")
 endif()
 
 configure_file(
-        ${CMAKE_CURRENT_SOURCE_DIR}/fluentui/fluentui_autoconf_config.h.cmake.in
-        ${CMAKE_CURRENT_BINARY_DIR}/fluentui/fluentui_autoconf_config.h
-        @ONLY)
+    ${CMAKE_CURRENT_SOURCE_DIR}/fluentui/fluentui_autoconf_config.h.cmake.in
+    ${CMAKE_CURRENT_BINARY_DIR}/fluentui/fluentui_autoconf_config.h
+    @ONLY)
 
 configure_file(
-        ${CMAKE_CURRENT_LIST_DIR}/fluentui/fluentui_version.h.cmake.in
-        ${CMAKE_CURRENT_BINARY_DIR}/fluentui/fluentui_version.h
-        @ONLY)
+    ${CMAKE_CURRENT_LIST_DIR}/fluentui/fluentui_version.h.cmake.in
+    ${CMAKE_CURRENT_BINARY_DIR}/fluentui/fluentui_version.h
+    @ONLY)
 
 # Definitions required for building
 add_definitions(
-        -DFLUENTUI_BUILDING_LIBRARY=1
+    -DFLUENTUI_BUILDING_LIBRARY=1
 )
 
 # Search the project binary dir for config.h
