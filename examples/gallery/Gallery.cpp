@@ -19,14 +19,14 @@ Gallery::Gallery(QWidget *parent) {
   mainLayout->setContentsMargins(8, 8, 8, 8);
 
   QLabel *defaultLabel = new QLabel("Default", this);
-  defaultLabel->setFont(QFont("Segoe UI", 14, QFont::Bold));
+  defaultLabel->setFont(QFont("Segoe UI", 10, QFont::Bold));
   defaultLabel->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
 
   // Default Badge
   auto badge = new Badge(this);
 
   QFrame *frame = new QFrame(this);
-  frame->setStyleSheet("QFrame{background: #fafafa;}");
+//   frame->setStyleSheet("QFrame{background: #fafafa;}");
   QHBoxLayout *frameLayout = new QHBoxLayout(frame);
   frameLayout->addWidget(badge, Qt::AlignLeft | Qt::AlignVCenter);
   frameLayout->addStretch();
@@ -35,14 +35,15 @@ Gallery::Gallery(QWidget *parent) {
   mainLayout->addWidget(frame);
 
   QLabel *appearanceLabel = new QLabel("Appearance", this);
-  appearanceLabel->setFont(QFont("Segoe UI", 14, QFont::Bold));
+  appearanceLabel->setFont(QFont("Segoe UI", 10, QFont::Bold));
   appearanceLabel->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
 
   QLabel *appearanceDescLabel =
       new QLabel("A badge can have a filled, ghost, outline, "
                  "or tint appearance. The default is filled.",
                  this);
-  appearanceDescLabel->setFont(QFont("Segoe UI", 14));
+  appearanceDescLabel->setWordWrap(true);
+  appearanceDescLabel->setFont(QFont("Segoe UI", 10));
   appearanceDescLabel->setSizePolicy(QSizePolicy::Preferred,
                                      QSizePolicy::Fixed);
 
@@ -56,7 +57,7 @@ Gallery::Gallery(QWidget *parent) {
   badge4->setText("999+");
 
   QFrame *frame2 = new QFrame(this);
-  frame2->setStyleSheet("QFrame{background: #fafafa;}");
+//   frame2->setStyleSheet("QFrame{background: #fafafa;}");
   QHBoxLayout *frame2Layout = new QHBoxLayout(frame2);
   frame2Layout->setSpacing(3);
   frame2Layout->addWidget(badge1);
@@ -70,14 +71,15 @@ Gallery::Gallery(QWidget *parent) {
   mainLayout->addWidget(frame2);
 
   QLabel *sizeLabel = new QLabel("Sizes", this);
-  sizeLabel->setFont(QFont("Segoe UI", 14, QFont::Bold));
+  sizeLabel->setFont(QFont("Segoe UI", 10, QFont::Bold));
   sizeLabel->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
 
   QLabel *sizesDescLabel =
       new QLabel("A badge supports tiny, extra-small, small, medium, large, "
                  "and extra-large sizes. The default is medium.",
                  this);
-  sizesDescLabel->setFont(QFont("Segoe UI", 14));
+  sizesDescLabel->setWordWrap(true);
+  sizesDescLabel->setFont(QFont("Segoe UI", 10));
   sizesDescLabel->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
 
   auto badge5 = new Badge(this);
@@ -94,7 +96,7 @@ Gallery::Gallery(QWidget *parent) {
   badge10->setPresetSize(Badge::PresetSize::extralarge);
 
   QFrame *frame3 = new QFrame(this);
-  frame3->setStyleSheet("QFrame{background: #fafafa;}");
+//   frame3->setStyleSheet("QFrame{background: #fafafa;}");
   QHBoxLayout *frame3Layout = new QHBoxLayout(frame3);
   frame3Layout->setSpacing(3);
   frame3Layout->addWidget(badge5);
@@ -110,14 +112,15 @@ Gallery::Gallery(QWidget *parent) {
   mainLayout->addWidget(frame3);
 
   QLabel *shapeLabel = new QLabel("Shapes", this);
-  shapeLabel->setFont(QFont("Segoe UI", 14, QFont::Bold));
+  shapeLabel->setFont(QFont("Segoe UI", 10, QFont::Bold));
   shapeLabel->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
 
   QLabel *shapeDescLabel =
       new QLabel("A badge can have square, rounded or circular shape. The "
                  "default is circular.",
                  this);
-  shapeDescLabel->setFont(QFont("Segoe UI", 14));
+  shapeDescLabel->setWordWrap(true);
+  shapeDescLabel->setFont(QFont("Segoe UI", 10));
   shapeDescLabel->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
 
   auto badge19 = new Badge(this, Badge::Appearance::filled, Badge::Color::brand,
@@ -128,7 +131,7 @@ Gallery::Gallery(QWidget *parent) {
                            Badge::Shape::circular);
 
   QFrame *frame5 = new QFrame(this);
-  frame5->setStyleSheet("QFrame{background: #fafafa;}");
+//   frame5->setStyleSheet("QFrame{background: #fafafa;}");
   QHBoxLayout *frame5Layout = new QHBoxLayout(frame5);
   frame5Layout->setSpacing(3);
   frame5Layout->addWidget(badge19);
@@ -142,8 +145,8 @@ Gallery::Gallery(QWidget *parent) {
 
   // Color
 
-  QLabel *colorLabel = new QLabel("Sizes", this);
-  colorLabel->setFont(QFont("Segoe UI", 14, QFont::Bold));
+  QLabel *colorLabel = new QLabel("Colors", this);
+  colorLabel->setFont(QFont("Segoe UI", 10, QFont::Bold));
   colorLabel->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
 
   QLabel *colorDescLabel =
@@ -152,7 +155,8 @@ Gallery::Gallery(QWidget *parent) {
                  "important, informative, severe, subtle, success or warning. "
                  "The default is brand. ",
                  this);
-  colorDescLabel->setFont(QFont("Segoe UI", 14));
+  colorDescLabel->setWordWrap(true);
+  colorDescLabel->setFont(QFont("Segoe UI", 10));
   colorDescLabel->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
 
   auto badge11 =
@@ -181,7 +185,7 @@ Gallery::Gallery(QWidget *parent) {
   badge18->setText("999+");
 
   QFrame *frame4 = new QFrame(this);
-  frame4->setStyleSheet("QFrame{background: #fafafa;}");
+//   frame4->setStyleSheet("QFrame{background: #fafafa;}");
   QHBoxLayout *frame4Layout = new QHBoxLayout(frame4);
   frame4Layout->setSpacing(3);
   frame4Layout->addWidget(badge11);
@@ -199,16 +203,17 @@ Gallery::Gallery(QWidget *parent) {
   mainLayout->addWidget(frame4);
 
   QLabel *colorAppearLabel = new QLabel("Color And Appearance", this);
-  colorAppearLabel->setFont(QFont("Segoe UI", 14, QFont::Bold));
+  colorAppearLabel->setFont(QFont("Segoe UI", 10, QFont::Bold));
   colorAppearLabel->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
 
   QLabel *colorAppearDescLabel =
       new QLabel("Note: ghost-subtle and outline-subtle are intended only for "
                  "use on brand background.",
                  this);
-  colorAppearDescLabel->setFont(QFont("Segoe UI", 14));
+  colorAppearDescLabel->setWordWrap(true);
+  colorAppearDescLabel->setFont(QFont("Segoe UI", 10));
   colorAppearDescLabel->setSizePolicy(QSizePolicy::Preferred,
-                                      QSizePolicy::Fixed);
+                                         QSizePolicy::Fixed);
 
   QLabel *filledLabel = new QLabel("Filled", this);
   auto badge22 =
@@ -370,7 +375,7 @@ Gallery::Gallery(QWidget *parent) {
   tintLayout->addStretch();
 
   QFrame *frame6 = new QFrame(this);
-  frame6->setStyleSheet("QFrame{background: #fafafa;}");
+//   frame6->setStyleSheet("QFrame{background: #fafafa;}");
   QVBoxLayout *frame6Layout = new QVBoxLayout(frame6);
   frame6Layout->addLayout(subTitleFillLayout);
   frame6Layout->addLayout(filledLayout);
