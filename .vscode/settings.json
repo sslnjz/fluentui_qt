@@ -6,5 +6,9 @@
     "qpaintevent": "cpp",
     "qpainter": "cpp",
     "qwidget": "cpp"
+  },
+  "[cpp]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "xaver.clang-format"
   }
 }

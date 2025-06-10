@@ -7,19 +7,17 @@
 
 #include <QWidget>
 
-class Gallery : public QWidget
-{
+class Gallery : public QWidget {
     Q_OBJECT
+
 public:
-    explicit Gallery(QWidget *parent = nullptr);
+    explicit Gallery(QWidget* parent = nullptr);
     ~Gallery() override;
 
-    QSize sizeHint() const override {
+    QSize sizeHint() const override
+    {
         return QSize(800, 800); // Default size for the gallery
     }
-
 };
 
-
-
-#endif //GALLERY_H
+#endif // GALLERY_H

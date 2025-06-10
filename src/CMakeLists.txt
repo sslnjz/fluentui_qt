@@ -50,12 +50,13 @@ set(fluentui_qt_SOURCES
 #         endif()
 # endif()
 
-find_package(QT NAMES Qt6 REQUIRED COMPONENTS Core)
+find_package(QT NAMES Qt6 REQUIRED COMPONENTS Core Gui Widgets Svg)
 find_package(Qt${QT_VERSION_MAJOR}
     COMPONENTS
     Core
     Gui
     Widgets
+    Svg
 )
 qt_standard_project_setup()
 
@@ -108,6 +109,7 @@ target_link_libraries(Qt6Fluent PRIVATE
     Qt6::Core
     Qt6::Gui
     Qt6::Widgets
+    Qt6::Svg
 )
 
 set_target_properties(${TARGET_NAME} PROPERTIES
