@@ -10,8 +10,10 @@ constexpr auto _sc(const QAnyStringView& c)
     return QColor::fromString(c);
 }
 
-namespace Tokens {
-enum Theme {
+namespace Tokens
+{
+enum Theme
+{
     Light = 0,
     Dark,
     TeamsLight,
@@ -336,7 +338,7 @@ static const QColor colorScrollbarOverlay[ThemeCount] = {
     _sc("#80000000"), _sc("#99ffffff"), _sc("#80000000"), _sc("#99ffffff")
 };
 static const QColor colorBrandBackground[ThemeCount] = {
-    _sc("#ff0f6cbd"), _sc("#ff115ea3"), _sc("#ff5b5fc7"), _sc("#ff4f52b2")
+    _sc("#0f6cbd"), _sc("#ff115ea3"), _sc("#ff5b5fc7"), _sc("#ff4f52b2")
 };
 static const QColor colorBrandBackgroundHover[ThemeCount] = {
     _sc("#ff115ea3"), _sc("#ff0f6cbd"), _sc("#ff4f52b2"), _sc("#ff5b5fc7")

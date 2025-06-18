@@ -1,8 +1,14 @@
 
 set(gallery_sources
     gallery/main.cpp
-        gallery/Gallery.cpp
-        gallery/Gallery.h
+    gallery/Gallery.cpp
+    gallery/Gallery.h
+    gallery/badge/BadgeDefault.h
+    gallery/badge/BadgeSample.h
+    gallery/badge/BadgeSample.cpp
+    gallery/ui/GalleryFrame.h
+    gallery/ui/GalleryFrame.cpp
+    gallery/ui/GalleryFrame.ui
 )
 
 list(APPEND CMAKE_PREFIX_PATH "/Applications/Qt/6.9.1/macos")
@@ -29,7 +35,6 @@ find_package(Qt${QT_VERSION_MAJOR}
         Core
         Gui
         Widgets
-        Network
 )
 qt_standard_project_setup()
 

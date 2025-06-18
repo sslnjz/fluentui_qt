@@ -1,4 +1,6 @@
 set(core_headers
+    fluentui/components/IFluentPropsWidget.h
+    fluentui/components/IPropties.h
 )
 
 set(core_sources
@@ -6,20 +8,26 @@ set(core_sources
 
 set(components_headers
     fluentui/components/Badge.h
+    fluentui/components/BadgeProps.h
+    fluentui/components/SvgIcons.h
 )
 
 set(components_sources
     fluentui/components/Badge.cpp
+    fluentui/components/SvgIcons.cpp
 )
 
 set(styles_headers
     fluentui/styles/Style.h
-    # fluentui/styles/ThemeManager.h
+    fluentui/styles/BadgeStyle.h
 )
 
 set(styles_sources
-    # fluentui/styles/Style.cpp
-    # fluentui/styles/ThemeManager.cpp
+    fluentui/styles/BadgeStyle.cpp
+)
+
+set(resources_sources
+    fluentui/resources/assets.qrc
 )
 
 set(fluentui_qt_HEADERS
@@ -32,6 +40,7 @@ set(fluentui_qt_SOURCES
     ${core_sources}
     ${styles_sources}
     ${components_sources}
+    ${resources_sources}
 )
 
 # if(NOT DEFINED Qt6_DIR)

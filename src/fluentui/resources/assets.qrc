@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/assets">
+        <file>assets/ic_fluent_clipboard_paste_32_light.svg</file>
+        <file>assets/ic_fluent_clipboard_paste_32_regular.svg</file>
+    </qresource>
+</RCC>

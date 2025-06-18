@@ -2,9 +2,11 @@
 
 #include "Gallery.h"
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[])
+{
     QApplication::setHighDpiScaleFactorRoundingPolicy(
         Qt::HighDpiScaleFactorRoundingPolicy::PassThrough);
+
     QApplication a(argc, argv);
 
     Gallery g;

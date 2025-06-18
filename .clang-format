@@ -1,4 +1,21 @@
 # ---
 BasedOnStyle: WebKit
 
-AlignConsecutiveMacros: AcrossEmptyLinesAndComments
+IndentWidth: 4
+UseTab: Never
+BreakBeforeBraces: Allman
+AllowShortIfStatementsOnASingleLine: false
+
+
+# BreakBeforeBraces: Custom
+# BraceWrapping:
+#   AfterEnum: true
+#   AfterStruct: true
+#   AfterClass: true
+#   AfterCaseLabel: true
+#   AfterControlStatement: MultiLine
+#   SplitEmptyRecord: true
+#   SplitEmptyFunction: false
+#   SplitEmptyNamespace: true
+
+# BreakConstructorInitializers: BeforeComma

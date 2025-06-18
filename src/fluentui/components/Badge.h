@@ -1,90 +1,50 @@
 #ifndef BADGE_H
 #define BADGE_H
 
+#include <QFlags>
 #include <QIcon>
-#include <QWidget>
+#include <QSize>
+#include <QString>
 
-#include <QtCore/qtclasshelpermacros.h>
-#include <QtCore/qtmetamacros.h>
 #include <fluentui/FluentuiDefs.h>
-#include <qflags.h>
-#include <qsize.h>
+#include <fluentui/components/BadgeProps.h>
+#include <fluentui/core/IFluentPropsWidget.h>
 
-class BadgePrivate;
-
-class FLUENTUI_EXPORT Badge : public QWidget {
+class FLUENTUI_EXPORT Badge : public IFluentPropsWidget<BadgeProps>
+{
     Q_OBJECT
-    Q_DECLARE_PRIVATE(Badge)
     Q_DISABLE_COPY(Badge)
 
 public:
-    Q_PROPERTY(QIcon icon READ icon WRITE setIcon)
+    Q_PROPERTY(QString icon READ svgIcon WRITE setSvgIcon)
     Q_PROPERTY(QString text READ text WRITE setText)
-    Q_PROPERTY(Color color READ color WRITE setColor)
-    Q_PROPERTY(PresetSize presetSize READ presetSize WRITE setPresetSize)
-    Q_PROPERTY(Appearance appearance READ appearance WRITE setAppearance)
+    Q_PROPERTY(BadgeProps::Status status READ status WRITE setStatus)
+    Q_PROPERTY(BadgeProps::Scale scale READ scale WRITE setScale)
+    Q_PROPERTY(BadgeProps::Appearance appearance READ appearance WRITE setAppearance)
 
-    enum class Color {
-        brand,
-        danger,
-        important,
-        informative,
-        severe,
-        subtle,
-        success,
-        warning
-    };
-    Q_ENUM(Color)
-
-    enum class Appearance {
-        filled,
-        ghost,
-        outline,
-        tint
-    };
-    Q_ENUM(Appearance)
-
-    enum class PresetSize {
-        tiny,
-        extrasmall,
-        small,
-        medium,
-        large,
-        extralarge
-    };
-    Q_ENUM(PresetSize)
-
-    enum class Shape {
-        circular,
-        rounded,
-        square
-    };
-    Q_ENUM(Shape)
-
-    explicit Badge(
-        QWidget* parent = nullptr,
-        Appearance appearance = Appearance::filled,
-        Color c = Color::brand,
-        Shape s = Shape::circular);
+    explicit Badge(QWidget* parent = nullptr,
+        BadgeProps::Appearance appear = BadgeProps::Appearance::filled,
+        BadgeProps::Status status = BadgeProps::Status::brand,
+        BadgeProps::Shape shape = BadgeProps::Shape::circular);
     ~Badge() override;
 
-    QIcon icon() const;
-    void setIcon(const QIcon& icon);
+    QString svgIcon() const;
+    void setSvgIcon(const QString& icon);
 
     QString text() const;
     void setText(const QString& text);
 
-    Color color() const;
-    void setColor(Color color);
+    BadgeProps::Status status() const;
+    void setStatus(BadgeProps::Status status);
 
-    PresetSize presetSize() const;
-    void setPresetSize(PresetSize size);
+    BadgeProps::Scale scale() const;
+    void setScale(BadgeProps::Scale scale);
 
-    Shape shape() const;
-    void setShpe(Shape shape);
+    BadgeProps::Shape shape() const;
+    void setShpe(BadgeProps::Shape shape);
 
-    Appearance appearance() const;
-    void setAppearance(Appearance appearance);
+    BadgeProps::Appearance appearance() const;
+    void setAppearance(BadgeProps::Appearance appear);
 
 protected:
     void paintEvent(QPaintEvent* event) override;
@@ -95,7 +55,7 @@ public:
     QSize minimumSizeHint() const override;
 
 private:
-    QScopedPointer<BadgePrivate> d_ptr;
+    QSize actualSize() const;
 };
 
 #endif // BADGE_H
